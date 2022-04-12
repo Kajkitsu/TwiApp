@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/screen_name"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:autofillHints="Screen name"
+        tools:ignore="LabelFor" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="94dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/twiapp_by_hopa_amp_waszkowiak"
+        android:textAlignment="center"
+        android:textColor="?attr/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/notFoundTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="68dp"
+        android:text="@string/user_not_found"
+        android:textColor="?attr/colorError"
+        android:textSize="40sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/infoLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="484dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/profilepicture"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/elon_musk_en" />
+
+                <TextView
+                    android:id="@+id/createdAtText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/created_at_tue_jun_02_20_12_29_0000_2009" />
+
+                <TextView
+                    android:id="@+id/favouritesCountText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/favourites_12816" />
+
+                <TextView
+                    android:id="@+id/followersCountText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/followers_81408199" />
+
+                <TextView
+                    android:id="@+id/friendsCountText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/friends_113" />
+
+                <TextView
+                    android:id="@+id/statusesCountText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statuses_17387" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <RadioGroup
+            android:id="@+id/typeRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:checkedButton="@id/displayscoresRadioButton"
+            android:weightSum="1">
+
+            <RadioButton
+                android:id="@+id/capRadioButton"
+                android:layout_width="30dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.3333"
+                android:checked="true"
+                android:text="@string/cap" />
+
+            <RadioButton
+                android:id="@+id/displayscoresRadioButton"
+                android:layout_width="30dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.3333"
+                android:checked="false"
+                android:text="@string/displayscores" />
+
+            <RadioButton
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/rawscoresRadioButton"
+                android:layout_width="30dp"
+                android:layout_height="68dp"
+                android:layout_weight="0.3333"
+                android:checked="false"
+                android:text="@string/rawscores" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/engOrUniGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:checkedButton="@id/universalRadioButton"
+            android:weightSum="1">
+
+            <RadioButton
+                android:id="@+id/englishRadioButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="0.5"
+                android:checked="false"
+                android:text="@string/english" />
+
+            <RadioButton
+                android:id="@+id/universalRadioButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="0.5"
+                android:checked="true"
+                android:text="@string/universal" />
+
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/astroturfTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/astroturf" />
+
+        <TextView
+            android:id="@+id/fakeFollowerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/fake_follower" />
+
+        <TextView
+            android:id="@+id/financialTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/financial" />
+
+        <TextView
+            android:id="@+id/otherTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/other" />
+
+        <TextView
+            android:id="@+id/overallTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/overall" />
+
+        <TextView
+            android:id="@+id/selfDeclaredTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/self_declared" />
+
+        <TextView
+            android:id="@+id/spammerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/spammer" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

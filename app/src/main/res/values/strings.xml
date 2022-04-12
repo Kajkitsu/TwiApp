@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">TwiApp</string>
+    <string name="screen_name">elonmusk</string>
+    <string name="search">Search</string>
+    <string name="twiapp_by_hopa_amp_waszkowiak"><![CDATA[TwiApp by Hopa&Waszkowiak]]></string>
+    <string name="cap">Cap</string>
+    <string name="displayscores">Display scores</string>
+    <string name="rawscores">RawScores</string>
+    <string name="elon_musk_en">Elon Musk (en)</string>
+    <string name="created_at_tue_jun_02_20_12_29_0000_2009">Created at: Tue Jun 02 20:12:29 +0000 2009</string>
+    <string name="favourites_12816">Favourites: 12816</string>
+    <string name="followers_81408199">Followers: 81408199</string>
+    <string name="friends_113">Friends: 113</string>
+    <string name="statuses_17387">Statuses: 17387</string>
+    <string name="astroturf">astroturf</string>
+    <string name="fake_follower">fake_follower</string>
+    <string name="financial">financial</string>
+    <string name="other">other</string>
+    <string name="overall">overall</string>
+    <string name="self_declared">self_declared</string>
+    <string name="spammer">spammer</string>
+    <string name="profilepicture">profilePicture</string>
+    <string name="english">English</string>
+    <string name="universal">Universal</string>
+    <string name="user_not_found">User not found</string>
+</resources>
