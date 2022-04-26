@@ -1,11 +1,20 @@
 package pl.edu.wat.twiapp
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import pl.edu.wat.twiapp.botmeter.BotmeterApi
 import pl.edu.wat.twiapp.botmeter.BotmeterResult
+import java.net.URL
+import java.util.concurrent.Executors
 
 class MainViewModel : ViewModel() {
     private val _resultForm = MutableLiveData<BotmeterResult>()
@@ -13,25 +22,30 @@ class MainViewModel : ViewModel() {
 
     val api = BotmeterApi()
 
-    fun updateForName(screenName: String) {
-        val thread = Thread {
-            try {
-                _resultForm.postValue(api.getBootStats(screenName))
-                if (_resultForm.value?.message != null) {
-                    Log.e(this.javaClass.canonicalName, "Message" + _resultForm.value?.message!!)
-                }
-                if (_resultForm.value?.error != null) {
-                    Log.e(this.javaClass.canonicalName, "Error" + _resultForm.value?.error!!)
-                }
-                Log.d(this.javaClass.canonicalName, _resultForm.value.toString())
-            } catch (e: Exception) {
-                e.printStackTrace()
+    suspend fun updateForName(screenName: String) {
+        return withContext(Dispatchers.IO) {
+            val retVal = api.getBootStats(screenName)
+            if (retVal.message != null) {
+                Log.e(this.javaClass.canonicalName, "Message: " + retVal.message)
             }
+            if (retVal.error != null) {
+                Log.e(this.javaClass.canonicalName, "Error: " + retVal.error)
+            }
+            _resultForm.postValue(retVal)
         }
-        thread.start()
-    }
 
+    }
     fun clear() {
         _resultForm.postValue(BotmeterResult())
+    }
+
+    suspend fun getPhoto(url: URL): Bitmap? {
+        return withContext(Dispatchers.IO) {
+            try {
+                return@withContext BitmapFactory.decodeStream(url.openStream())
+            } catch (e: Exception) {
+                return@withContext null
+            }
+        }
     }
 }

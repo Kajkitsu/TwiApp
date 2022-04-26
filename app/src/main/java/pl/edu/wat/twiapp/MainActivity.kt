@@ -1,29 +1,31 @@
 package pl.edu.wat.twiapp
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import pl.edu.wat.twiapp.botmeter.BotmeterResult
 import pl.edu.wat.twiapp.botmeter.Cap
 import pl.edu.wat.twiapp.botmeter.ScoreValues
 import pl.edu.wat.twiapp.botmeter.UserData
 import pl.edu.wat.twiapp.databinding.ActivityMainBinding
 import java.net.URL
-import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var defaultPhoto: Bitmap
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +54,20 @@ class MainActivity : AppCompatActivity() {
                 fillUserData(userData)
                 fillImageView(URL(userData.profileImageURL))
             } ?: run {
+                //if is null
                 binding.infoLayout.visibility = View.INVISIBLE
                 binding.notFoundTextView.visibility = View.VISIBLE
-                // If is null.
+                when {
+                    it.error == "JSON Error" -> {
+                        binding.notFoundTextView.text = "User not found"
+                    }
+                    it.error?.isNotEmpty() == true -> {
+                        binding.notFoundTextView.text = it.message
+                    }
+                    else -> {
+                        binding.notFoundTextView.text = "Error"
+                    }
+                }
             }
             radioButtonUpdate(it)
         }
@@ -64,7 +77,9 @@ class MainActivity : AppCompatActivity() {
         binding.editTextTextPersonName.addTextChangedListener(getEditTextWatcher())
 
         binding.button.setOnClickListener {
-            updateDataForName()
+            GlobalScope.launch(Dispatchers.Main) {
+                updateDataForName()
+            }
         }
 
         binding.engOrUniGroup.setOnCheckedChangeListener { radioGroup, i ->
@@ -73,6 +88,8 @@ class MainActivity : AppCompatActivity() {
         binding.typeRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
             mainViewModel.resultFormState.value?.let { result -> radioButtonUpdate(result) }
         }
+
+        defaultPhoto = BitmapFactory.decodeResource(resources, R.drawable.default_profile_normal)
     }
 
     private fun getEditTextWatcher(): TextWatcher? {
@@ -93,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateDataForName() {
+    private suspend fun updateDataForName() {
         binding.progressBar.visibility = View.VISIBLE
         binding.notFoundTextView.visibility = View.INVISIBLE
         binding.button.isEnabled = false
@@ -123,9 +140,9 @@ class MainActivity : AppCompatActivity() {
         } else if (binding.rawScoresRadioButton.isChecked) {
             binding.engOrUniGroup.visibility = View.VISIBLE
             if (binding.universalRadioButton.isChecked) {
-                result.rawScores?.universal?.let { score -> fillStats(score) }
+                result.rawScores?.universal?.let { score -> fillStats(score, raw = true) }
             } else {
-                result.rawScores?.english?.let { score -> fillStats(score) }
+                result.rawScores?.english?.let { score -> fillStats(score, raw = true) }
             }
         } else { //capsScores
             binding.engOrUniGroup.visibility = View.INVISIBLE
@@ -134,37 +151,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun fillCapStats(score: Cap) {
+    private fun fillCapStats(score: Cap, raw: Boolean = false) {
         fillDetailText(
             listOf(
-                Pair("Universal", score.universal),
-                Pair("English", score.english)
+                Triple("Universal", score.universal, raw),
+                Triple("English", score.english, raw)
             )
         )
     }
 
     @SuppressLint("SetTextI18n")
-    private fun fillStats(score: ScoreValues) {
+    private fun fillStats(score: ScoreValues, raw: Boolean = false) {
         fillDetailText(
             listOf(
-                Pair("Astroturf", score.astroturf),
-                Pair("Fake follower", score.fakeFollower),
-                Pair("Financial", score.financial),
-                Pair("Other", score.other),
-                Pair("Self declared", score.selfDeclared),
-                Pair("Spammer", score.spammer),
-                Pair("Overall", score.overall),
+                Triple("Astroturf", score.astroturf, raw),
+                Triple("Fake follower", score.fakeFollower, raw),
+                Triple("Financial", score.financial, raw),
+                Triple("Other", score.other, raw),
+                Triple("Self declared", score.selfDeclared, raw),
+                Triple("Spammer", score.spammer, raw),
+                Triple("Overall", score.overall, raw),
             )
         )
 
     }
 
-    private fun fillDetailText(list: List<Pair<String, Double?>>) {
+    private fun fillDetailText(list: List<Triple<String, Double?, Boolean>>) {
         binding.detailText.text = ""
-        list.forEach { (key, value) ->
+        list.forEach { (key, value, isRaw) ->
             binding.detailText.append("$key: ")
-            binding.detailText.append(value?.let { getColorEmoji(it) })
-            binding.detailText.append(" $value\n")
+            binding.detailText.append(value?.let { getColorEmoji(if (isRaw) (value * 5.0) else value) })
+            binding.detailText.append(" ${value}\n")
         }
     }
 
@@ -178,21 +195,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fillImageView(url: URL) {
-        binding.imageView.visibility = View.INVISIBLE
-        val handler = Handler(Looper.getMainLooper())
-        Executors.newSingleThreadExecutor().execute {
-            try {
-                val image = BitmapFactory.decodeStream(url.openStream())
-                handler.post {
-                    binding.imageView.setImageBitmap(
-                        image
-                    )
-                    binding.imageView.visibility = View.VISIBLE
-                }
-            } catch (e: Exception) {
-                Log.e(javaClass.canonicalName, "Exception while setting image", e)
-                e.printStackTrace()
+        binding.imageView.setImageBitmap(
+            defaultPhoto
+        )
+        GlobalScope.launch(Dispatchers.Main) {
+            mainViewModel.getPhoto(url)?.let { photo ->
+                binding.imageView.setImageBitmap(photo)
+            } ?: run {
+                binding.imageView.setImageBitmap(
+                    defaultPhoto
+                )
             }
         }
+
     }
 }
