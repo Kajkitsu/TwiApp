@@ -156,7 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:checkedButton="@id/displayscoresRadioButton"
+            android:checkedButton="@id/displayScoresRadioButton"
             android:weightSum="1">
 
             <RadioButton
@@ -169,7 +169,7 @@
                 android:text="@string/cap" />
 
             <RadioButton
-                android:id="@+id/displayscoresRadioButton"
+                android:id="@+id/displayScoresRadioButton"
                 android:layout_width="30dp"
                 android:layout_height="68dp"
                 android:layout_gravity="center_horizontal"
@@ -179,7 +179,7 @@
 
             <RadioButton
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/rawscoresRadioButton"
+                android:id="@+id/rawScoresRadioButton"
                 android:layout_width="30dp"
                 android:layout_height="68dp"
                 android:layout_weight="0.3333"
@@ -215,60 +215,14 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/astroturfTextView"
+            android:id="@+id/detailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:text="@string/astroturf" />
+            android:text="Some details\n\n\n\n\n" />
 
-        <TextView
-            android:id="@+id/fakeFollowerTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/fake_follower" />
 
-        <TextView
-            android:id="@+id/financialTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/financial" />
-
-        <TextView
-            android:id="@+id/otherTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/other" />
-
-        <TextView
-            android:id="@+id/overallTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/overall" />
-
-        <TextView
-            android:id="@+id/selfDeclaredTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/self_declared" />
-
-        <TextView
-            android:id="@+id/spammerTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/spammer" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
