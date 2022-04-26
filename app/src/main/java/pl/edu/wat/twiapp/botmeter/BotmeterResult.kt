@@ -4,6 +4,7 @@ package pl.edu.wat.twiapp.botmeter
 //
 //   val welcome = Welcome.fromJson(jsonString)
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
@@ -42,17 +43,19 @@ data class BotmeterResult(
     }
 }
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Cap(
     val english: Double? = null,
     val universal: Double? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Scores(
     val english: ScoreValues? = null,
     val universal: ScoreValues? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ScoreValues(
     val astroturf: Double? = null,
 
@@ -69,6 +72,7 @@ data class ScoreValues(
     val spammer: Double? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class User(
     @get:JsonProperty("majority_lang") @field:JsonProperty("majority_lang")
     val majorityLang: String? = null,
@@ -77,6 +81,7 @@ data class User(
     val userData: UserData? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class UserData(
     @get:JsonProperty("contributors_enabled") @field:JsonProperty("contributors_enabled")
     val contributorsEnabled: Boolean? = null,
@@ -199,14 +204,17 @@ data class UserData(
     val withheldInCountries: List<Any?>? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class UserDataEntities(
     val description: Description? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Description(
     val urls: List<Any?>? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Status(
     val contributors: Any? = null,
     val coordinates: Any? = null,
@@ -256,6 +264,7 @@ data class Status(
     val truncated: Boolean? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class StatusEntities(
     val hashtags: List<Any?>? = null,
     val symbols: List<Any?>? = null,
@@ -265,6 +274,7 @@ data class StatusEntities(
     val userMentions: List<UserMention>? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class UserMention(
     val id: Long? = null,
 
