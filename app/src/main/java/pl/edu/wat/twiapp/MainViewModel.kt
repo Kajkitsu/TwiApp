@@ -18,10 +18,10 @@ class MainViewModel : ViewModel() {
             try {
                 _resultForm.postValue(api.getBootStats(screenName))
                 if (_resultForm.value?.message != null) {
-                    Log.e(this.javaClass.canonicalName, _resultForm.value?.message!!)
+                    Log.e(this.javaClass.canonicalName, "Message" + _resultForm.value?.message!!)
                 }
                 if (_resultForm.value?.error != null) {
-                    Log.e(this.javaClass.canonicalName, _resultForm.value?.error!!)
+                    Log.e(this.javaClass.canonicalName, "Error" + _resultForm.value?.error!!)
                 }
                 Log.d(this.javaClass.canonicalName, _resultForm.value.toString())
             } catch (e: Exception) {

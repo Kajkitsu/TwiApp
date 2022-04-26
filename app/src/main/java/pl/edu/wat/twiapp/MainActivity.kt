@@ -12,7 +12,6 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import pl.edu.wat.twiapp.botmeter.BotmeterResult
 import pl.edu.wat.twiapp.botmeter.Cap
 import pl.edu.wat.twiapp.botmeter.ScoreValues
@@ -41,7 +40,8 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        mainViewModel.resultFormState.observe(this
+        mainViewModel.resultFormState.observe(
+            this
         ) {
             binding.progressBar.visibility = View.INVISIBLE
             binding.button.isEnabled = true
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateDataForName(){
+    private fun updateDataForName() {
         binding.progressBar.visibility = View.VISIBLE
         binding.notFoundTextView.visibility = View.INVISIBLE
         binding.button.isEnabled = false
@@ -103,12 +103,13 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun fillUserData(userData: UserData) {
-        binding.nameText.text = "Name: " + userData.name.toString()
-        binding.createdAtText.text = "Created at: " + userData.createdAt.toString()
-        binding.favouritesCountText.text = "Favourites: " + userData.favouritesCount.toString()
-        binding.followersCountText.text = "Followers: " + userData.followersCount.toString()
-        binding.friendsCountText.text = "Friends: " + userData.friendsCount.toString()
-        binding.statusesCountText.text = "Statuses: " + userData.statusesCount.toString()
+        binding.baseInfoText.text = ""
+        binding.baseInfoText.append("Name: " + userData.name.toString() + "\n")
+        binding.baseInfoText.append("Created at: " + userData.createdAt.toString() + "\n")
+        binding.baseInfoText.append("Favourites: " + userData.favouritesCount.toString() + "\n")
+        binding.baseInfoText.append("Followers: " + userData.followersCount.toString() + "\n")
+        binding.baseInfoText.append("Friends: " + userData.friendsCount.toString() + "\n")
+        binding.baseInfoText.append("Statuses: " + userData.statusesCount.toString() + "\n")
     }
 
     private fun radioButtonUpdate(result: BotmeterResult) {
@@ -169,18 +170,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun getColorEmoji(value: Double): CharSequence {
         return when {
-            value > 3.75 -> {
-                "🔴"
-            }
-            value > 2.5 -> {
-                "🟠"
-            }
-            value > 1.25 -> {
-                "🟡"
-            }
-            else -> {
-                "🟢"
-            }
+            value > 3.75 -> "🔴"
+            value > 2.5 -> "🟠"
+            value > 1.25 -> "🟡"
+            else -> "🟢"
         }
     }
 

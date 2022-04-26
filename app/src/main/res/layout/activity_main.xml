@@ -109,40 +109,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/nameText"
+                    android:id="@+id/baseInfoText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/elon_musk_en" />
 
-                <TextView
-                    android:id="@+id/createdAtText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/created_at_tue_jun_02_20_12_29_0000_2009" />
-
-                <TextView
-                    android:id="@+id/favouritesCountText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/favourites_12816" />
-
-                <TextView
-                    android:id="@+id/followersCountText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/followers_81408199" />
-
-                <TextView
-                    android:id="@+id/friendsCountText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/friends_113" />
-
-                <TextView
-                    android:id="@+id/statusesCountText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/statuses_17387" />
             </LinearLayout>
 
         </LinearLayout>
